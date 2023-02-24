@@ -1,4 +1,4 @@
-/**
+/*
  * ProfilePicture4J
  * Copyright © ${project.inceptionYear} gmasil
  *

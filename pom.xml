@@ -42,12 +42,12 @@
         <logback.version>1.4.5</logback.version>
         <slf4j.version>2.0.6</slf4j.version>
         <!-- plugin versions -->
-        <assembly-plugin.version>3.3.0</assembly-plugin.version>
+        <assembly-plugin.version>3.4.2</assembly-plugin.version>
         <jlink-plugin.version>0.1.11</jlink-plugin.version>
         <frontend-plugin.version>1.12.1</frontend-plugin.version>
-        <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
-        <resources-plugin.version>3.2.0</resources-plugin.version>
-        <license-plugin.version>3.0</license-plugin.version>
+        <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
+        <resources-plugin.version>3.3.0</resources-plugin.version>
+        <license-plugin.version>4.1</license-plugin.version>
     </properties>
 
     <dependencies>
@@ -79,9 +79,6 @@
                         <phase>validate</phase>
                     </execution>
                 </executions>
-                <configuration>
-                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-                </configuration>
             </plugin>
             <!-- build fat jar -->
             <plugin>
@@ -196,21 +193,25 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>${license-plugin.version}</version>
                 <configuration>
-                    <header>${project.basedir}/license/templates/gnu_gpl_v3.txt</header>
-                    <properties>
-                        <owner>${product.owner}</owner>
-                    </properties>
-                    <includes>
-                        <include>src/main/java/**</include>
-                        <include>src/main/resources/**</include>
-                        <include>src/test/java/**</include>
-                        <include>src/test/resources/**</include>
-                        <include>pom.xml</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/LICENSE.txt</exclude>
-                        <exclude>**/LICENSE.md</exclude>
-                    </excludes>
+                    <licenseSets>
+                        <licenseSet>
+                            <header>${project.basedir}/license/templates/gnu_gpl_v3.txt</header>
+                            <includes>
+                                <include>src/main/java/**</include>
+                                <include>src/main/resources/**</include>
+                                <include>src/test/java/**</include>
+                                <include>src/test/resources/**</include>
+                                <include>pom.xml</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/LICENSE.txt</exclude>
+                                <exclude>**/LICENSE.md</exclude>
+                            </excludes>
+                            <properties>
+                                <owner>${product.owner}</owner>
+                            </properties>
+                        </licenseSet>
+                    </licenseSets>
                 </configuration>
                 <executions>
                     <execution>
