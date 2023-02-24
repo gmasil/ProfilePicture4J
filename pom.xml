@@ -1,0 +1,226 @@
+<!--
+
+    ProfilePicture4J
+    Copyright © ${project.inceptionYear} gmasil
+
+    This file is part of ProfilePicture4J.
+
+    ProfilePicture4J is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ProfilePicture4J is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with ProfilePicture4J. If not, see <https://www.gnu.org/licenses/>.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.gmasil</groupId>
+    <artifactId>profilepicture4j</artifactId>
+    <name>ProfilePicture4J</name>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- assembly -->
+        <starter.class>de.gmasil.profilepicture4j.Application</starter.class>
+        <node.version>v18.14.2</node.version>
+        <target.file>${project.name}.exe</target.file>
+        <!-- license -->
+        <product.owner>gmasil</product.owner>
+        <!-- versions -->
+        <logback.version>1.4.5</logback.version>
+        <slf4j.version>2.0.6</slf4j.version>
+        <!-- plugin versions -->
+        <assembly-plugin.version>3.3.0</assembly-plugin.version>
+        <jlink-plugin.version>0.1.11</jlink-plugin.version>
+        <frontend-plugin.version>1.12.1</frontend-plugin.version>
+        <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
+        <resources-plugin.version>3.2.0</resources-plugin.version>
+        <license-plugin.version>3.0</license-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- make git revision available -->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>git-info</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                </configuration>
+            </plugin>
+            <!-- build fat jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${assembly-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>build-fat-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>${starter.class}</mainClass>
+                                </manifest>
+                                <manifestEntries>
+                                    <Version>${project.version}</Version>
+                                    <SCM-Revision>${git.commit.id.describe-short}</SCM-Revision>
+                                </manifestEntries>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <attach>false</attach>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- copy jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/bundle</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/target</directory>
+                                    <includes>
+                                        <include>${project.artifactId}-${project.version}-jar-with-dependencies.jar</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- copy runtime -->
+            <plugin>
+                <groupId>com.github.akman</groupId>
+                <artifactId>jlink-maven-plugin</artifactId>
+                <version>${jlink-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-jre</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jlink</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <addmodules>
+                        <addmodule>ALL-MODULE-PATH</addmodule>
+                    </addmodules>
+                    <output>target/bundle/runtime</output>
+                </configuration>
+            </plugin>
+            <!-- build exe -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>${node.version}</nodeVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bundle</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>npx</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>caxa --input target/bundle --output target/${target.file} --no-include-node --
+                                "{{caxa}}/runtime/bin/java" "-jar"
+                                "{{caxa}}/${project.artifactId}-${project.version}-jar-with-dependencies.jar"</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- license -->
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${license-plugin.version}</version>
+                <configuration>
+                    <header>${project.basedir}/license/templates/gnu_gpl_v3.txt</header>
+                    <properties>
+                        <owner>${product.owner}</owner>
+                    </properties>
+                    <includes>
+                        <include>src/main/java/**</include>
+                        <include>src/main/resources/**</include>
+                        <include>src/test/java/**</include>
+                        <include>src/test/resources/**</include>
+                        <include>pom.xml</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/LICENSE.txt</exclude>
+                        <exclude>**/LICENSE.md</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
