@@ -20,12 +20,15 @@
 package de.gmasil.profilepicture4j;
 
 import de.gmasil.profilepicture4j.command.PictureCommand;
+import de.gmasil.profilepicture4j.command.UnsortedSynopsisHelpFactory;
 import picocli.CommandLine;
 
 public class Application {
 
     public static void main(String[] args) {
-        int exitCode = new CommandLine(new PictureCommand()).execute(args);
+        int exitCode = new CommandLine(new PictureCommand())
+                .setHelpFactory(new UnsortedSynopsisHelpFactory())
+                .execute(args);
         System.exit(exitCode);
     }
 }

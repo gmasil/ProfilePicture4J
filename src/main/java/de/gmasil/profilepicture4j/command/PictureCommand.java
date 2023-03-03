@@ -26,20 +26,23 @@ import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-@Command(name = "ProfilePicture4J.exe", mixinStandardHelpOptions = true, versionProvider = ManifestVersionProvider.class)
+@Command(name = "ProfilePicture4J.exe", mixinStandardHelpOptions = true, versionProvider = ManifestVersionProvider.class, sortOptions = false)
 public class PictureCommand implements Callable<Integer> {
 
-    @Option(names = { "-v", "--verbose" }, description = "Log verbose.")
-    boolean verbose;
+    public static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Option(names = { "-n",
             "--name" }, description = "Full name to generate initials.", required = true)
@@ -50,6 +53,15 @@ public class PictureCommand implements Callable<Integer> {
 
     @Option(names = { "--output-format" }, description = "Output format of image (png, jpg, etc.).")
     String outputFormat = "png";
+
+    @Option(names = { "--color" }, description = "Primary color.")
+    String primaryColorString = "#1a57ba";
+
+    @Option(names = { "--secondary-color" }, description = "Secondary color.")
+    String secondaryColorString = "#3477e3";
+
+    @Option(names = { "--background-color" }, description = "Background color.")
+    String backgroundColorString = "#e6ebf2";
 
     @Option(names = { "--width" }, description = "Width of image in pixels.")
     int width = 512;
@@ -62,15 +74,6 @@ public class PictureCommand implements Callable<Integer> {
 
     @Option(names = { "--ring-width" }, description = "Width of the ring.")
     Integer ringWidth = null;
-
-    @Option(names = { "--color" }, description = "Primary color.")
-    String primaryColorString = "#1a57ba";
-
-    @Option(names = { "--secondary-color" }, description = "Secondary color.")
-    String secondaryColorString = "#3477e3";
-
-    @Option(names = { "--background-color" }, description = "Background color.")
-    String backgroundColorString = "#e6ebf2";
 
     @Option(names = { "--font-size" }, description = "Font size for the initials.")
     Integer initialsFontSize = null;
@@ -89,6 +92,9 @@ public class PictureCommand implements Callable<Integer> {
 
     @Option(names = { "--debug" }, description = "Enable visual debug options.")
     boolean debug;
+
+    @Option(names = { "-v", "--verbose" }, description = "Log verbose.")
+    boolean verbose;
 
     private String initials;
     private Color primaryColor;
@@ -136,18 +142,22 @@ public class PictureCommand implements Callable<Integer> {
 
     public void prepareValues() {
         initials = getInitials();
+        LOG.info("Using initials {}", initials);
         primaryColor = colorFromHex(primaryColorString);
         secondaryColor = colorFromHex(secondaryColorString);
         backgroundColor = colorFromHex(backgroundColorString);
         shortestSide = Math.min(width, height);
         if (space == null) {
             space = (int) (shortestSide * 0.07f);
+            verboseLog("Setting space to {}", space);
         }
         if (ringWidth == null) {
             ringWidth = (int) (shortestSide * 0.07f);
+            verboseLog("Setting ring-width to {}", ringWidth);
         }
         if (initialsFontSize == null) {
             initialsFontSize = (int) (shortestSide * 0.3f);
+            verboseLog("Setting font-size to {}", initialsFontSize);
         }
     }
 
@@ -195,5 +205,11 @@ public class PictureCommand implements Callable<Integer> {
 
     public String getInitials() {
         return String.join("", Arrays.stream(name.split(" ")).map(s -> s.substring(0, 1).toUpperCase()).toList());
+    }
+
+    private void verboseLog(String format, Object... args) {
+        if (verbose) {
+            LOG.info(format, args);
+        }
     }
 }
