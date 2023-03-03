@@ -1,4 +1,4 @@
-# ProfilePicture4J
+# ProfilePicture4J [![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fjenkins.gmasil.de%2Fjob%2Fgithub-gmasil%2Fjob%2FProfilePicture4J%2Fjob%2Fmaster%2F)](https://jenkins.gmasil.de/blue/organizations/jenkins/github-gmasil%2FProfilePicture4J/branches/) [![Quality Gate Status](https://sonar.gmasil.de/api/project_badges/measure?project=de.gmasil%3Aprofilepicture4j%3Amaster&metric=alert_status)](https://sonar.gmasil.de/dashboard?id=de.gmasil%3Aprofilepicture4j%3Amaster) [![Coverage](https://sonar.gmasil.de/api/project_badges/measure?project=de.gmasil%3Aprofilepicture4j%3Amaster&metric=coverage)](https://sonar.gmasil.de/dashboard?id=de.gmasil%3Aprofilepicture4j%3Amaster)
 
 ProfilePicture4J is a simple tool to generate profile pictures using name initials while picking up your corporate identity colors.
 
