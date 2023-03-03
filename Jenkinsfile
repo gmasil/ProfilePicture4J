@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('compile') {
       steps {
-        sh 'mvn clean package --no-transfer-progress'
+        sh("mvn clean package -P windows --no-transfer-progress")
       }
     }
     stage('analyze') {
@@ -28,6 +28,7 @@ pipeline {
     always {
       archiveArtifacts artifacts: 'target/ProfilePicture4J.exe', fingerprint: true
       archiveArtifacts artifacts: 'target/ProfilePicture4J.jar', fingerprint: true
+      archiveArtifacts artifacts: 'target/example.png', fingerprint: true
       cleanWs()
       dir("${env.WORKSPACE}@tmp") {
         deleteDir()

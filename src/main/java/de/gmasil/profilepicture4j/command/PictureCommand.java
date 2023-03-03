@@ -142,7 +142,7 @@ public class PictureCommand implements Callable<Integer> {
 
     public void prepareValues() {
         initials = getInitials();
-        LOG.info("Using initials {}", initials);
+        verboseLog("Using initials {}", initials);
         primaryColor = colorFromHex(primaryColorString);
         secondaryColor = colorFromHex(secondaryColorString);
         backgroundColor = colorFromHex(backgroundColorString);

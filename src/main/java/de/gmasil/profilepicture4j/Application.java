@@ -25,10 +25,13 @@ import picocli.CommandLine;
 
 public class Application {
 
-    public static void main(String[] args) {
-        int exitCode = new CommandLine(new PictureCommand())
+    public static void main(String... args) {
+        System.exit(runCmd(args));
+    }
+
+    public static int runCmd(String... args) {
+        return new CommandLine(new PictureCommand())
                 .setHelpFactory(new UnsortedSynopsisHelpFactory())
                 .execute(args);
-        System.exit(exitCode);
     }
 }
