@@ -52,47 +52,47 @@ You can get a list of all arguments including a brief description when using the
 ```
 
 ```
-Usage: ProfilePicture4J.exe [-hvV] [--debug]
-                            [--background-color=<backgroundColorString>]
-                            [--color=<primaryColorString>]
-                            [--font-family=<initialsFontFamily>]
-                            [--font-file=<initialsFontFile>]
-                            [--font-height-correction=<initialsFontHeightCorrect
-                            ion>] [--font-size=<initialsFontSize>]
-                            [--font-width-correction=<initialsFontWidthCorrectio
-                            n>] [--height=<height>] -n=<name> [-o=<outputFile>]
+Usage: ProfilePicture4J.exe [-vhV] -n=<name> [-o=<outputFile>]
                             [--output-format=<outputFormat>]
-                            [--ring-width=<ringWidth>]
+                            [--color=<primaryColorString>]
                             [--secondary-color=<secondaryColorString>]
-                            [--space=<space>] [--width=<width>]
-      --background-color=<backgroundColorString>
-                          Background color.
-      --color=<primaryColorString>
-                          Primary color.
-      --debug             Enable visual debug options.
-      --font-family=<initialsFontFamily>
-                          Font family for the initials.
-      --font-file=<initialsFontFile>
-                          Load font from file for the initials.
-      --font-height-correction=<initialsFontHeightCorrection>
-                          Correction for font height for the initials.
-      --font-size=<initialsFontSize>
-                          Font size for the initials.
-      --font-width-correction=<initialsFontWidthCorrection>
-                          Correction for font height for the initials.
-  -h, --help              Show this help message and exit.
-      --height=<height>   Height of image in pixels.
+                            [--background-color=<backgroundColorString>]
+                            [--width=<width>] [--height=<height>]
+                            [--space=<space>] [--ring-width=<ringWidth>]
+                            [--font-size=<initialsFontSize>]
+                            [--font-height-correction=<initialsFontHeightCorrect
+                            ion>]
+                            [--font-width-correction=<initialsFontWidthCorrectio
+                            n>] [--font-family=<initialsFontFamily>]
+                            [--font-file=<initialsFontFile>] [--debug]
   -n, --name=<name>       Full name to generate initials.
   -o, --output=<outputFile>
                           Output image file.
       --output-format=<outputFormat>
                           Output format of image (png, jpg, etc.).
-      --ring-width=<ringWidth>
-                          Width of the ring.
+      --color=<primaryColorString>
+                          Primary color.
       --secondary-color=<secondaryColorString>
                           Secondary color.
-      --space=<space>     Space to the borders of the image.
-  -v, --verbose           Log verbose.
-  -V, --version           Print version information and exit.
+      --background-color=<backgroundColorString>
+                          Background color.
       --width=<width>     Width of image in pixels.
+      --height=<height>   Height of image in pixels.
+      --space=<space>     Space to the borders of the image.
+      --ring-width=<ringWidth>
+                          Width of the ring.
+      --font-size=<initialsFontSize>
+                          Font size for the initials.
+      --font-height-correction=<initialsFontHeightCorrection>
+                          Correction for font height for the initials.
+      --font-width-correction=<initialsFontWidthCorrection>
+                          Correction for font height for the initials.
+      --font-family=<initialsFontFamily>
+                          Font family for the initials.
+      --font-file=<initialsFontFile>
+                          Load font from file for the initials.
+      --debug             Enable visual debug options.
+  -v, --verbose           Log verbose.
+  -h, --help              Show this help message and exit.
+  -V, --version           Print version information and exit.
 ```
