@@ -29,6 +29,7 @@ pipeline {
       archiveArtifacts artifacts: 'target/ProfilePicture4J.exe', fingerprint: true
       archiveArtifacts artifacts: 'target/ProfilePicture4J.jar', fingerprint: true
       archiveArtifacts artifacts: 'target/example.png', fingerprint: true
+      junit testResults: '**/surefire-reports/**/*.xml', allowEmptyResults: true
       cleanWs()
       dir("${env.WORKSPACE}@tmp") {
         deleteDir()
