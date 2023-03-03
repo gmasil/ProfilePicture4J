@@ -27,6 +27,7 @@ pipeline {
   post {
     always {
       archiveArtifacts artifacts: 'target/ProfilePicture4J.exe', fingerprint: true
+      archiveArtifacts artifacts: 'target/ProfilePicture4J.jar', fingerprint: true
       cleanWs()
       dir("${env.WORKSPACE}@tmp") {
         deleteDir()

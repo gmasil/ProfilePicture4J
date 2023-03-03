@@ -17,15 +17,16 @@
  * You should have received a copy of the GNU General Public License
  * along with ProfilePicture4J. If not, see <https://www.gnu.org/licenses/>.
  */
-package de.gmasil.profilepicture4j;
+package de.gmasil.profilepicture4j.command;
 
-import de.gmasil.profilepicture4j.command.PictureCommand;
-import picocli.CommandLine;
+import de.gmasil.profilepicture4j.manifest.ManifestData;
+import picocli.CommandLine.IVersionProvider;
 
-public class Application {
+public class ManifestVersionProvider implements IVersionProvider {
 
-    public static void main(String[] args) {
-        int exitCode = new CommandLine(new PictureCommand()).execute(args);
-        System.exit(exitCode);
+    @Override
+    public String[] getVersion() throws Exception {
+        ManifestData manifest = ManifestData.readManifest();
+        return new String[] { "Version: " + manifest.getVersion(), "Revision: " + manifest.getRevision() };
     }
 }

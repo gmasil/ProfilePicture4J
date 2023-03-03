@@ -3,3 +3,5 @@
 .settings/
 target/
 node/
+out.png
+todo.md
