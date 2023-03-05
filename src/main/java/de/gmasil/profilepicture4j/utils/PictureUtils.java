@@ -17,16 +17,19 @@
  * You should have received a copy of the GNU General Public License
  * along with ProfilePicture4J. If not, see <https://www.gnu.org/licenses/>.
  */
-package de.gmasil.profilepicture4j.command;
+package de.gmasil.profilepicture4j.utils;
 
-import de.gmasil.profilepicture4j.manifest.ManifestData;
-import picocli.CommandLine.IVersionProvider;
+import java.awt.Color;
 
-public class ManifestVersionProvider implements IVersionProvider {
+public class PictureUtils {
 
-    @Override
-    public String[] getVersion() throws Exception {
-        ManifestData manifest = ManifestData.readManifest();
-        return new String[] { "Version: " + manifest.getVersion(), "Revision: " + manifest.getRevision() };
+    private PictureUtils() {
+    }
+
+    public static Color colorFromHex(String hex) {
+        if (hex.startsWith("#")) {
+            hex = hex.substring(1);
+        }
+        return new Color(Integer.parseInt(hex, 16));
     }
 }

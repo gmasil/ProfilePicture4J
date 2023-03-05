@@ -1,6 +1,6 @@
 /*
  * ProfilePicture4J
- * Copyright © ${project.inceptionYear} gmasil
+ * Copyright © 2023 gmasil
  *
  * This file is part of ProfilePicture4J.
  *

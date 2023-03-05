@@ -1,7 +1,7 @@
 <!--
 
     ProfilePicture4J
-    Copyright © ${project.inceptionYear} gmasil
+    Copyright © 2023 gmasil
 
     This file is part of ProfilePicture4J.
 
@@ -24,8 +24,25 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.gmasil</groupId>
     <artifactId>profilepicture4j</artifactId>
-    <name>ProfilePicture4J</name>
     <version>0.0.1-SNAPSHOT</version>
+
+    <name>ProfilePicture4J</name>
+    <description>Command line tool to generate profile pictures using corporate identity colors</description>
+
+    <inceptionYear>2023</inceptionYear>
+    <url>https://github.com/gmasil/ProfilePicture4J</url>
+
+    <organization>
+        <name>Gmasil</name>
+        <url>https://gmasil.de</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License v3 (GPLv3)</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+        </license>
+    </licenses>
 
     <properties>
         <java.version>17</java.version>

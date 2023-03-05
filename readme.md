@@ -65,6 +65,7 @@ Usage: ProfilePicture4J.exe [-vhV] -n=<name> [-o=<outputFile>]
                             [--font-width-correction=<initialsFontWidthCorrectio
                             n>] [--font-family=<initialsFontFamily>]
                             [--font-file=<initialsFontFile>] [--debug]
+                            [--generator-class=<generatorClass>]
   -n, --name=<name>       Full name to generate initials.
   -o, --output=<outputFile>
                           Output image file.
@@ -93,6 +94,9 @@ Usage: ProfilePicture4J.exe [-vhV] -n=<name> [-o=<outputFile>]
                           Load font from file for the initials.
       --debug             Enable visual debug options.
   -v, --verbose           Log verbose.
+      --generator-class=<generatorClass>
+                          Specify fully qualified class name of picture
+                            generator to use.
   -h, --help              Show this help message and exit.
   -V, --version           Print version information and exit.
 ```
